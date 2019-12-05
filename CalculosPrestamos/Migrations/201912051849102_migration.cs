@@ -55,11 +55,13 @@ namespace CalculosPrestamos.Migrations
                         NumeroPagosAnno = c.Int(nullable: false),
                         FechaInicio = c.DateTime(nullable: false),
                         PagosAdicionales = c.Double(nullable: false),
-                        UsuarioNombre = c.String(nullable: false),
+                        UsuarioID = c.Int(nullable: false),
                         ClienteId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.PrestamoID)
                 .ForeignKey("dbo.Cliente", t => t.ClienteId, cascadeDelete: true)
+                .ForeignKey("dbo.Usuario", t => t.UsuarioID, cascadeDelete: true)
+                .Index(t => t.UsuarioID)
                 .Index(t => t.ClienteId);
             
             CreateTable(
@@ -78,9 +80,11 @@ namespace CalculosPrestamos.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.Prestamo", "UsuarioID", "dbo.Usuario");
             DropForeignKey("dbo.DetallesPrestamo", "PrestamoID", "dbo.Prestamo");
             DropForeignKey("dbo.Prestamo", "ClienteId", "dbo.Cliente");
             DropIndex("dbo.Prestamo", new[] { "ClienteId" });
+            DropIndex("dbo.Prestamo", new[] { "UsuarioID" });
             DropIndex("dbo.DetallesPrestamo", new[] { "PrestamoID" });
             DropTable("dbo.Usuario");
             DropTable("dbo.Prestamo");

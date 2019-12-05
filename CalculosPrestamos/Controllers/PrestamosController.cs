@@ -1,11 +1,13 @@
-﻿using CalculosPrestamos.DAL;
-using CalculosPrestamos.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using CalculosPrestamos.DAL;
+using CalculosPrestamos.Models;
 
 namespace CalculosPrestamos.Controllers
 {
@@ -16,8 +18,8 @@ namespace CalculosPrestamos.Controllers
         // GET: Prestamos
         public ActionResult Index()
         {
-            var prestamos = db.Prestamo.Include(p => p.Cliente);
-            return View(prestamos.ToList());
+            var prestamo = db.Prestamo.Include(p => p.Cliente).Include(p => p.Usuario);
+            return View(prestamo.ToList());
         }
 
         // GET: Prestamos/Details/5
@@ -40,6 +42,7 @@ namespace CalculosPrestamos.Controllers
         public ActionResult Create()
         {
             ViewBag.ClienteId = new SelectList(db.Cliente, "ClienteID", "Nombre");
+            ViewBag.UsuarioID = new SelectList(db.Usuario, "UsuarioId", "Nombre");
             return View();
         }
 
@@ -48,7 +51,7 @@ namespace CalculosPrestamos.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PrestamoID,MontoPrestamo,InteresAnual,PrediodoPrestamosAnnos,NumeroPagosAnno,FechaInicio,PagosAdicionales,UsuarioNombre,ClienteId")] Prestamo prestamo)
+        public ActionResult Create([Bind(Include = "PrestamoID,MontoPrestamo,InteresAnual,PrediodoPrestamosAnnos,NumeroPagosAnno,FechaInicio,PagosAdicionales,UsuarioID,ClienteId")] Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +61,7 @@ namespace CalculosPrestamos.Controllers
             }
 
             ViewBag.ClienteId = new SelectList(db.Cliente, "ClienteID", "Nombre", prestamo.ClienteId);
+            ViewBag.UsuarioID = new SelectList(db.Usuario, "UsuarioId", "Nombre", prestamo.UsuarioID);
             return View(prestamo);
         }
 
@@ -74,6 +78,7 @@ namespace CalculosPrestamos.Controllers
                 return HttpNotFound();
             }
             ViewBag.ClienteId = new SelectList(db.Cliente, "ClienteID", "Nombre", prestamo.ClienteId);
+            ViewBag.UsuarioID = new SelectList(db.Usuario, "UsuarioId", "Nombre", prestamo.UsuarioID);
             return View(prestamo);
         }
 
@@ -82,7 +87,7 @@ namespace CalculosPrestamos.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PrestamoID,MontoPrestamo,InteresAnual,PrediodoPrestamosAnnos,NumeroPagosAnno,FechaInicio,PagosAdicionales,UsuarioNombre,ClienteId")] Prestamo prestamo)
+        public ActionResult Edit([Bind(Include = "PrestamoID,MontoPrestamo,InteresAnual,PrediodoPrestamosAnnos,NumeroPagosAnno,FechaInicio,PagosAdicionales,UsuarioID,ClienteId")] Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +96,7 @@ namespace CalculosPrestamos.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ClienteId = new SelectList(db.Cliente, "ClienteID", "Nombre", prestamo.ClienteId);
+            ViewBag.UsuarioID = new SelectList(db.Usuario, "UsuarioId", "Nombre", prestamo.UsuarioID);
             return View(prestamo);
         }
 
@@ -128,7 +134,6 @@ namespace CalculosPrestamos.Controllers
             }
             base.Dispose(disposing);
         }
-
         public List<DetallesPrestamo> CrearDetalles(Prestamo prestamo)
         {
             DetallesPrestamo[] detalles = new DetallesPrestamo[prestamo.NumeroPagosAnno * prestamo.PrediodoPrestamosAnnos];
@@ -172,7 +177,7 @@ namespace CalculosPrestamos.Controllers
             {
                 detalles[i] = new DetallesPrestamo();
                 detalles[i].PrestamoID = prestamo.PrestamoID;
-                detalles[i].FechaPago = Fecha;
+                detalles[i].FechaPago = detalles[i-1].FechaPago.AddMonths(1);
                 detalles[i].SaldoInicial = detalles[i - 1].BalanceFinal;
                 detalles[i].Cuotas = Cuotas;
                 if (detalles[i].Cuotas + prestamo.PagosAdicionales < detalles[i].SaldoInicial)

@@ -13,7 +13,7 @@ namespace CalculosPrestamos.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201912051454201_migration"; }
+            get { return "201912051849102_migration"; }
         }
         
         string IMigrationMetadata.Source

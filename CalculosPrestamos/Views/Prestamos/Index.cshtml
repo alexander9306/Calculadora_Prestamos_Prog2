@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.Cliente.Nombre)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Usuario.Nombre)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.MontoPrestamo)
         </th>
         <th>
@@ -32,9 +35,6 @@
         <th>
             @Html.DisplayNameFor(model => model.PagosAdicionales)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UsuarioNombre)
-        </th>
         <th></th>
     </tr>
 
@@ -44,10 +44,13 @@
             @Html.DisplayFor(modelItem => item.Cliente.Nombre)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Usuario.Nombre)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.MontoPrestamo)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.InteresAnual)
+            @Html.DisplayFor(modelItem => item.InteresAnual)%
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PrediodoPrestamosAnnos)
@@ -60,9 +63,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PagosAdicionales)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UsuarioNombre)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PrestamoID }) |

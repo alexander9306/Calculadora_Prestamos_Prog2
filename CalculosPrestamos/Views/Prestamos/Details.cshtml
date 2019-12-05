@@ -19,6 +19,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Nombre)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.MontoPrestamo)
         </dt>
 
@@ -66,52 +74,55 @@
             @Html.DisplayFor(model => model.PagosAdicionales)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UsuarioNombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UsuarioNombre)
-        </dd>
-
     </dl>
 </div>
+
 
 <table class="table">
     <tr>
         <th>
-            Fecha de Prestamo
+            No.
         </th>
         <th>
-            Saldo Inicial
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].FechaPago)
         </th>
         <th>
-            Cuotas
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].SaldoInicial)
         </th>
         <th>
-            Avances
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].Cuotas)
+
         </th>
         <th>
-            Pago Total
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].Avances)
+
         </th>
         <th>
-            Capital
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].PagoTotal)
         </th>
         <th>
-            Intereses
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].Capital)
         </th>
         <th>
-            Balance Final
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].Interes)
         </th>
         <th>
-            Intereses Acumulados
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].BalanceFinal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DetallesPrestamos[0].InteresAcumulado)
         </th>
         <th></th>
     </tr>
 
+    @{int i = 1; }
     @foreach (var item in Model.DetallesPrestamos)
     {
         <tr>
+            <td>
+                @i
+                @{i++;}
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaPago)
             </td>
