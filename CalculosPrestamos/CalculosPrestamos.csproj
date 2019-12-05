@@ -135,9 +135,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="DAL\CalculosPrestamosContext.cs" />
-    <Compile Include="Migrations\201912051849102_migration.cs" />
-    <Compile Include="Migrations\201912051849102_migration.Designer.cs">
-      <DependentUpon>201912051849102_migration.cs</DependentUpon>
+    <Compile Include="Migrations\201912052222010_migration.cs" />
+    <Compile Include="Migrations\201912052222010_migration.Designer.cs">
+      <DependentUpon>201912052222010_migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -215,8 +215,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201912051849102_migration.resx">
-      <DependentUpon>201912051849102_migration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912052222010_migration.resx">
+      <DependentUpon>201912052222010_migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

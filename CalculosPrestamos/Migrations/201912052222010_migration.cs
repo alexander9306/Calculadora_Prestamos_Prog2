@@ -62,7 +62,7 @@ namespace CalculosPrestamos.Migrations
                 .ForeignKey("dbo.Cliente", t => t.ClienteId, cascadeDelete: true)
                 .ForeignKey("dbo.Usuario", t => t.UsuarioID, cascadeDelete: true)
                 .Index(t => t.UsuarioID)
-                .Index(t => t.ClienteId);
+                .Index(t => t.ClienteId, unique: true);
             
             CreateTable(
                 "dbo.Usuario",

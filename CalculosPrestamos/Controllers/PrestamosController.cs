@@ -177,7 +177,7 @@ namespace CalculosPrestamos.Controllers
             {
                 detalles[i] = new DetallesPrestamo();
                 detalles[i].PrestamoID = prestamo.PrestamoID;
-                detalles[i].FechaPago = detalles[i-1].FechaPago.AddMonths(1);
+                detalles[i].FechaPago = detalles[i - 1].FechaPago.AddMonths(1);
                 detalles[i].SaldoInicial = detalles[i - 1].BalanceFinal;
                 detalles[i].Cuotas = Cuotas;
                 if (detalles[i].Cuotas + prestamo.PagosAdicionales < detalles[i].SaldoInicial)

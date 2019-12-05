@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -38,6 +39,7 @@ namespace CalculosPrestamos.Models
         public virtual Usuario Usuario { get; set; }
         [Required]
         [Display(Name = "Cliente")]
+        [Index(IsUnique = true)]
         public int ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
         public virtual List<DetallesPrestamo> DetallesPrestamos { get; set; }
