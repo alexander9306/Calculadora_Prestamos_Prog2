@@ -1,0 +1,150 @@
+﻿@model CalculosPrestamos.Models.Prestamo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Prestamo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MontoPrestamo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MontoPrestamo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InteresAnual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InteresAnual)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrediodoPrestamosAnnos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrediodoPrestamosAnnos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroPagosAnno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroPagosAnno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PagosAdicionales)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PagosAdicionales)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioNombre)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Fecha de Prestamo
+        </th>
+        <th>
+            Saldo Inicial
+        </th>
+        <th>
+            Cuotas
+        </th>
+        <th>
+            Avances
+        </th>
+        <th>
+            Pago Total
+        </th>
+        <th>
+            Capital
+        </th>
+        <th>
+            Intereses
+        </th>
+        <th>
+            Balance Final
+        </th>
+        <th>
+            Intereses Acumulados
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.DetallesPrestamos)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaldoInicial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cuotas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Avances)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PagoTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capital)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Interes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BalanceFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InteresAcumulado)
+            </td>
+        </tr>
+    }
+</table>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PrestamoID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
