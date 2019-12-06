@@ -61,9 +61,30 @@ namespace CalculosPrestamos.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Prestamo.Add(prestamo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                bool exist = false;
+                Cliente cliente = null ;
+                foreach (var item in db.Prestamo)
+                {
+                    if (item.ClienteId == prestamo.ClienteId)
+                    {
+                        cliente = item.Cliente;
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist)
+                {
+                    db.Prestamo.Add(prestamo);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.ClienteId = new SelectList(db.Cliente, "ClienteID", "Nombre", prestamo.ClienteId);
+                    ViewBag.UsuarioID = new SelectList(db.Usuario, "UsuarioId", "Nombre", prestamo.UsuarioID);
+                    ViewBag.Message = string.Format("El cliente {0} {1} ya tiene un prestamo asociado", cliente.Nombre, cliente.Apellido);
+                    return View(prestamo);
+                }
             }
 
             ViewBag.ClienteId = new SelectList(db.Cliente, "ClienteID", "Nombre", prestamo.ClienteId);
