@@ -76,6 +76,7 @@
                 <a asp-action="Edit" asp-route-id="@item.ClienteID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ClienteID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ClienteID">Delete</a>
+                @Html.ActionLink("Ver prestamo", "Indexs", "Prestamos", new { id = item.ClienteID }, null)
             </td>
         </tr>
 }

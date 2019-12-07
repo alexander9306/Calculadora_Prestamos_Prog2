@@ -26,6 +26,12 @@ namespace Calculadora_Prestamos.Controllers
             return View(await dbContextSistema.ToListAsync());
         }
 
+        public ActionResult Indexs(int id)
+        {
+            var prestamo = _context.Prestamos.Include(p => p.Cliente).Include(p => p.Usuario).Where(p => p.Cliente.ClienteID.Equals(id));
+            return View("Index", prestamo.ToList());
+        }
+
         // GET: Prestamos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
