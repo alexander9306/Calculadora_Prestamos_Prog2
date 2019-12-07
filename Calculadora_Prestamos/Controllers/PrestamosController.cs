@@ -55,8 +55,8 @@ namespace Calculadora_Prestamos.Controllers
         // GET: Prestamos/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Apellido");
-            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Contrasena");
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Nombre");
+            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Nombre");
             return View();
         }
 
@@ -69,12 +69,33 @@ namespace Calculadora_Prestamos.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(prestamo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                bool exist = false;
+                Cliente cliente = null;
+                foreach (var item in _context.Prestamos)
+                {
+                    if (item.ClienteId == prestamo.ClienteId)
+                    {
+                        cliente = item.Cliente;
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist)
+                {
+                    _context.Add(prestamo);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Nombre", prestamo.ClienteId);
+                    ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Nombre", prestamo.UsuarioID);
+                    ViewBag.Message = string.Format("El cliente ya tiene un prestamo asociado");
+                    return View(prestamo);
+                }
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Apellido", prestamo.ClienteId);
-            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Contrasena", prestamo.UsuarioID);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Nombre", prestamo.ClienteId);
+            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Nombre", prestamo.UsuarioID);
             return View(prestamo);
         }
 
@@ -91,8 +112,8 @@ namespace Calculadora_Prestamos.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Apellido", prestamo.ClienteId);
-            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Contrasena", prestamo.UsuarioID);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Nombre", prestamo.ClienteId);
+            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Nombre", prestamo.UsuarioID);
             return View(prestamo);
         }
 
@@ -128,8 +149,8 @@ namespace Calculadora_Prestamos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Apellido", prestamo.ClienteId);
-            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Contrasena", prestamo.UsuarioID);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteID", "Nombre", prestamo.ClienteId);
+            ViewData["UsuarioID"] = new SelectList(_context.Usuarios, "UsuarioID", "Nombre", prestamo.UsuarioID);
             return View(prestamo);
         }
 
